@@ -1,0 +1,1 @@
+const promiseReduce = (asyncFunctions, reduce, initValue) => Promise.all(asyncFunctions).then(values => values.reduce(reduce, initValue));
