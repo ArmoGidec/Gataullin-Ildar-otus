@@ -3,7 +3,7 @@
 Основные файлы ветки репозитория:
 + index.html - простой скелет страницы
 + getPath.js - скрипт, содержащий функцию getPath
-+ vendor/lodash.min.js, vendor/lodash.combinations.min.js - файлы зависимостей
++ utils/getCombinations.js - утилита, позволяющая получить все возможные комбинации определенного размера
 
 # Как запустить
 
