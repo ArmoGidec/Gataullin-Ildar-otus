@@ -78,7 +78,7 @@ const getPath = (() => {
      * @param {string[]} selectors
      * @returns {string[][]} combinations of selectors
      */
-    const combine = (selectors) => selectors.map((_, index) => _combinations(selectors, index + 1)).flat();
+    const combine = (selectors) => selectors.map((_, index) => getCombinations(selectors, index + 1)).flat();
 
     return getPath;
 })();
@@ -88,4 +88,4 @@ let el = document.getElementsByClassName('hero')[1];
 let path = getPath(el);
 
 console.log(path);
-console.log(document.querySelectorAll(path) === el); // must be true!
+console.log(document.querySelectorAll(path)[0] === el); // must be true!
