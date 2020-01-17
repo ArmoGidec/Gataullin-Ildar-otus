@@ -17,7 +17,7 @@ const getPath = (() => {
 
         let check = _check(element);
 
-        // Possible selectors (id, class, tag)
+        // Possible selectors (id, class, tag, attribute)
         let _tag = element.tagName.toLocaleLowerCase();
         let _id = element.id ? `#${element.id}` : null;
         let _classList = Array.from(element.classList).map(className => `.${className}`);
@@ -25,7 +25,6 @@ const getPath = (() => {
             .call(element.attributes, attr => attr.name !== "id" && attr.name !== "class")
             .map(({ name, value }) => `${name}="${value}"`)).map(attr => `[${attr}]`);
 
-        // Combinations of selectors
         let _combinations = combine([_tag, _id, ..._classList, ..._attributes].filter(Boolean)).map(_combination => _combination.join(''));
 
         for (let combination of _combinations) {
@@ -66,11 +65,20 @@ const getPath = (() => {
         return null;
     }
 
+    /**
+     * Wrapper for checking function
+     * @param {HTMLElement} element
+     * @returns {(selector: string) => boolean}
+     */
     const _check = (element) => (selector) => 
         document.querySelectorAll(selector).length === 1 
         && document.querySelector(selector) === element;
 
-    const combine = (selectors) => _.flatMap(selectors, (__, i, a) => _.combinations(a, i + 1));
+    /**
+     * @param {string[]} selectors
+     * @returns {string[][]} combinations of selectors
+     */
+    const combine = (selectors) => selectors.map((_, index) => _combinations(selectors, index + 1)).flat();
 
     return getPath;
 })();
