@@ -12,7 +12,7 @@ npm run tree <path>
 ```
 
 Например, набрав команду `npm run tree foo`, в терминале выведется:
-```json
+```
 {
   files: [
     'foo/f1.txt',
