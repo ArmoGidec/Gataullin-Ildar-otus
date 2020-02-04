@@ -1,7 +1,7 @@
 const [_, __, dirPath] = process.argv;
 
 if (!dirPath) {
-    throw new Error('Argument "--path" is required.');
+    throw new Error('Argument "<path>" is required.');
 }
 
 const fs = require('fs');
