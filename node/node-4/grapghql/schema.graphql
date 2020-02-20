@@ -1,0 +1,21 @@
+type Item {
+    id: ID!
+    name: String!
+    price: Float!
+    url: String!
+    description: String
+}
+
+type Group {
+    id: ID!
+    name: String!
+    description: String
+    items: [Item]
+}
+
+type Query {
+    items: [Item]
+    item(id: Int): Item
+    groups: [Group]
+    group(id: Int): Group
+}
