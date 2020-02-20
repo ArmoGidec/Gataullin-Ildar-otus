@@ -1,14 +1,4 @@
-import MyLeaf from './myLeaf.js';
-
-function render(tree, shadowRoot) {
-    const container = document.createElement('div');
-    container.classList.add('container');
-    for (let item of tree.items) {
-        let child = item.items === undefined ? (new MyLeaf(item)) : (new MyTree(item));
-        container.appendChild(child);
-    }
-    shadowRoot.appendChild(container);
-}
+import './myLeaf.js';
 
 class MyTree extends HTMLElement {
     constructor(treeOptions = {}) {
@@ -22,38 +12,76 @@ class MyTree extends HTMLElement {
     display: block;
 }
 
-:host text {
+:host .text {
     cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
 }
 
-:host .container {
+:host .items {
     padding-left: 13px;
+}
+
+:host .items.collapsed {
+    display: none;
 }
 `;
 
         shadow.appendChild(style);
 
-        const text = document.createElement('div');
-        text.classList.add('text');
-        shadow.appendChild(text);
+        const container = document.createElement('div');
+        container.className = 'container';
+        shadow.appendChild(container);
 
-        try {
-            this.tree = JSON.parse(this.getAttribute('tree'));
-        } catch {
-            this.tree = treeOptions;
-        }
+        const tree = this.getAttribute('tree');
+        this.tree = JSON.parse(tree) || treeOptions;
 
-        render(this.tree, this.shadowRoot);
+        render(this.tree, container);
     }
 
-    static get observerAttributes() {
+    static get observedAttributes() {
         return ['tree'];
     }
 
     attributeChangedCallback(_, __, newValue) {
-        this.tree = newValue;
+        this.tree = JSON.parse(newValue);
+        render(this.tree, this.shadowRoot.querySelector('.container'));
     }
 }
 
-customElements.define('my-tree', MyTree);
 window.MyTree = MyTree;
+customElements.define('my-tree', MyTree);
+
+/**
+ * 
+ * @param {Object} tree 
+ * @param {HTMLDivElement} container 
+ */
+function render(tree, container) {
+    container.innerHTML = '';
+    const text = document.createElement('div');
+    text.classList.add('text');
+    container.appendChild(text);
+
+    text.innerText = `My tree: ${tree.id}`;
+
+    if (tree.items) {
+        const itemsContainer = document.createElement('div');
+        itemsContainer.className = 'items';
+        
+        let html = '';
+        
+        for (let item of tree.items) {
+            const itemOptions = JSON.stringify(item);
+            const leaf = `<my-leaf leaf='${itemOptions}'></my-leaf>`;
+            html += leaf;
+        }
+
+        itemsContainer.innerHTML = html;
+        container.appendChild(itemsContainer);
+
+        text.addEventListener('click', () => {
+            itemsContainer.classList.toggle('collapsed');
+        });
+    }
+}

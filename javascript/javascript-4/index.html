@@ -8,8 +8,18 @@
 </head>
 <body>
     <script src="myTree.js" type="module"></script>
-    <my-tree tree='{"id":1,"items":[{"id":2,"items":[{"id":3},{"id":4}]},{"id":5}]}'></my-tree>
-    <!-- <script src="element.js" type="module"></script> -->
-    <!-- <div id="app"></div> -->
+    <button>Change tree</button>
+    <my-tree tree='{"id":1, "items":[{"id":2,"items":[{"id":3},{"id":4}]},{"id":5}]}'></my-tree>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const options = '{"id":1, "items":[{"id":2,"items":[{"id":3}]},{"id":5}]}';
+
+            const tree = document.querySelector('my-tree');
+            
+            document.querySelector('button').addEventListener('click', () => {
+                tree.setAttribute('tree', options);
+            });
+        });
+    </script>
 </body>
 </html>
