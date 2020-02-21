@@ -13,6 +13,8 @@ const root = {
     item: ({id}) => db.getItemById(id),
     groups: () => db.getGroups(),
     group: ({id}) => db.getItemById(id),
+    types: () => db.getTypes(),
+    type: ({id}) => db.getTypeById(id),
 }
 
 const app = express();

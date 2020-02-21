@@ -4,6 +4,12 @@ type Item {
     price: Float!
     url: String!
     description: String
+    types: [Type]
+}
+
+type Type {
+    id: ID!
+    name: String!
 }
 
 type Group {
@@ -15,7 +21,9 @@ type Group {
 
 type Query {
     items: [Item]
-    item(id: Int): Item
+    item(id: Int!): Item
     groups: [Group]
-    group(id: Int): Group
+    group(id: Int!): Group
+    types: [Type]
+    type(id: Int!): Type
 }
