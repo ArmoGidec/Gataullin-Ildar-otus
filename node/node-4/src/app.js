@@ -30,6 +30,15 @@ const root = {
 
 const app = express();
 
+app.use((req, res, next) => {
+    if (req.path !== '/graphql') {
+        res.redirect('/graphql');
+        return;
+    }
+
+    next();
+});
+
 app.use('/graphql', graphqlHTTP({
     schema,
     rootValue: root,
