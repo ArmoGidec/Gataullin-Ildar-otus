@@ -2,6 +2,9 @@ import React, { Component, FormEvent } from 'react';
 
 import '$src/assets/style/main.css';
 import { weatherApiKey, apiBaseUrl } from '$src/config';
+import SearchForm from './components/SearchForm';
+import SearchResult from './components/SearchResult';
+import Favorites from './components/Favorites';
 
 interface IProps { }
 
@@ -30,6 +33,8 @@ class WeatherApp extends Component<IProps, IState>{
         this.handleSubmit = this.handleSubmit.bind(this);
         this.getWeather = this.getWeather.bind(this);
         this.addToFavorite = this.addToFavorite.bind(this);
+        this.chooseFavorite = this.chooseFavorite.bind(this);
+        this.removeFromfavorites = this.removeFromfavorites.bind(this);
     }
 
     handleInput(e: FormEvent<HTMLInputElement>) {
@@ -66,13 +71,17 @@ class WeatherApp extends Component<IProps, IState>{
     }
 
     chooseFavorite(index: number) {
-        const favorite = this.state.favorites[index];
-        this.setState({ ...this.state, searchValue: favorite.city }, this.getWeather);
+        return () => {
+            const favorite = this.state.favorites[index];
+            this.setState({ ...this.state, searchValue: favorite.city }, this.getWeather);
+        }
     }
 
     removeFromfavorites(index: number) {
-        const favorites = this.state.favorites.filter((_, i) => i !== index);
-        this.setState({ ...this.state, favorites });
+        return () => {
+            const favorites = this.state.favorites.filter((_, i) => i !== index);
+            this.setState({ ...this.state, favorites });
+        }
     }
 
     render() {
@@ -82,51 +91,20 @@ class WeatherApp extends Component<IProps, IState>{
             <div className="container">
                 <h1>Погода</h1>
                 <div className="block-wrapper">
-                    <form onSubmit={this.handleSubmit} className="input-group">
-                        <input placeholder="Введите город" type="text"
-                            value={searchValue} onChange={this.handleInput} />
-                        <button disabled={searchValue?.length === 0 || fetching} type="submit">
-                            Показать
-                        </button>
-                    </form>
+                    <SearchForm handleSubmit={this.handleSubmit}
+                                handleInput={this.handleInput}
+                                searchValue={searchValue}
+                                fetching={fetching}/>
                 </div>
                 {favorites.length > 0 && (
-                    <div className="block-wrapper">
-                        <b>Избранное</b>
-                        <ul className="favorites-list">
-                            {favorites.map((favorite, i) => (
-                                <li className="favorite-item" key={i}>
-                                    <div className="input-group">
-                                        <button onClick={this.chooseFavorite.bind(this, i)}>
-                                            {favorite.city}
-                                        </button>
-                                        <button title="Удалить из избранного"
-                                            onClick={this.removeFromfavorites.bind(this, i)}>
-                                            x
-                                        </button>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                    <Favorites chooseFavorite={this.chooseFavorite}
+                                favorites={favorites}
+                                removeFromfavorites={this.removeFromfavorites}/>
                 )}
                 {searchResult !== null && (
-                    <div className="block-wrapper">
-                        <div className="result-block">
-                            <b>{searchResult.name}</b>
-                            {favorites.every(({ city }) => city !== searchResult.name) && (
-                                <button className="add-favorite-btn" onClick={this.addToFavorite}>
-                                    Добавить в избранное
-                                </button>
-                            )}
-                            <div className="temp-block">
-                                <span>Температура: {searchResult.temp}&#176; C</span>
-                                <span>Ощущается как {searchResult.feels_like}&#176; C</span>
-                                <span>Максимальная температура: {searchResult.temp_max}&#176; C</span>
-                                <span>Минимальная температура: {searchResult.temp_min}&#176; C</span>
-                            </div>
-                        </div>
-                    </div>
+                    <SearchResult searchResult={searchResult}
+                                addToFavorite={this.addToFavorite}
+                                favorites={favorites}/>
                 )}
             </div>
         )
