@@ -1,11 +1,22 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-interface IProps {
-    name: string,
+interface IProps {}
+
+class WeatherApp extends Component<IProps>{
+    constructor(props: IProps) {
+        super(props);
+        this.state = {
+            favorites: []
+        };
+    }
+
+    render() {
+        return (
+            <div className="container">
+                
+            </div>
+        )
+    }
 }
 
-const App = ({name}: IProps) => (
-    <h1>Hello, {name}!</h1>
-)
-
-export default App;
+export default WeatherApp;
