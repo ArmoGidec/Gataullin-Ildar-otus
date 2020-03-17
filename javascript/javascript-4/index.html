@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Custom my-tree & my-leaf</title>
+</head>
+<body>
+    <script src="myTree.js" type="module"></script>
+    <button>Change tree</button>
+    <my-tree tree='{"id":1, "items":[{"id":2,"items":[{"id":3},{"id":4}]},{"id":5}]}'></my-tree>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const options = '{"id":1, "items":[{"id":2,"items":[{"id":3}]},{"id":5}]}';
+
+            const tree = document.querySelector('my-tree');
+            
+            document.querySelector('button').addEventListener('click', () => {
+                tree.setAttribute('tree', options);
+            });
+        });
+    </script>
+</body>
+</html>
