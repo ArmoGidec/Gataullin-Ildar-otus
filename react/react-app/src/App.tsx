@@ -28,26 +28,19 @@ class WeatherApp extends Component<IProps, IState>{
             fetching: false,
             favorites: [{ city: 'Ufa' }]
         }
-
-        this.handleInput = this.handleInput.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.getWeather = this.getWeather.bind(this);
-        this.addToFavorite = this.addToFavorite.bind(this);
-        this.chooseFavorite = this.chooseFavorite.bind(this);
-        this.removeFromfavorites = this.removeFromfavorites.bind(this);
     }
 
-    handleInput(e: FormEvent<HTMLInputElement>) {
+    handleInput = (e: FormEvent<HTMLInputElement>) => {
         const searchValue = e.currentTarget.value;
         this.setState({ ...this.state, searchValue });
     }
 
-    handleSubmit(e: FormEvent<HTMLFormElement>) {
+    handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e?.preventDefault();
         this.getWeather();
     }
 
-    async getWeather() {
+    getWeather = async () => {
         this.setState({ ...this.state, fetching: true });
         let searchResult = null
         const searchResponseResult = await fetch(
@@ -62,7 +55,7 @@ class WeatherApp extends Component<IProps, IState>{
         this.setState({ ...this.state, fetching: false, searchResult });
     }
 
-    addToFavorite() {
+    addToFavorite = () => {
         const state = this.state;
         if (state.searchResult !== null) {
             const favorites = state.favorites.concat({ city: state.searchResult.name });
@@ -70,14 +63,14 @@ class WeatherApp extends Component<IProps, IState>{
         }
     }
 
-    chooseFavorite(index: number) {
+    chooseFavorite = (index: number) => {
         return () => {
             const favorite = this.state.favorites[index];
             this.setState({ ...this.state, searchValue: favorite.city }, this.getWeather);
         }
     }
 
-    removeFromfavorites(index: number) {
+    removeFromfavorites = (index: number) => {
         return () => {
             const favorites = this.state.favorites.filter((_, i) => i !== index);
             this.setState({ ...this.state, favorites });
