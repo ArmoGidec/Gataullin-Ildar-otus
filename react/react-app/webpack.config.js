@@ -12,13 +12,20 @@ const config = {
     },
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+        alias: {
+            '$src': path.resolve(__dirname, 'src'),
+        }
     },
     module: {
         rules: [{
             test: /\.(js|ts)x?$/,
             exclude: /node_modules/,
             loader: 'babel-loader'
-        }]
+        }, {
+            test: /\.css$/,
+            exclude: /node_modules/,
+            use: ['style-loader', 'css-loader']
+        },]
     },
     plugins: [new CleanWebpackPlugin(), new HtmlWebpackPlugin({
         template: './src/public/index.html'
