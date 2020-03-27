@@ -1,0 +1,78 @@
+type Item {
+    id: ID!
+    name: String!
+    price: Float!
+    url: String!
+    description: String
+    types: [Type]
+}
+
+type Type {
+    id: ID!
+    name: String!
+}
+
+type Group {
+    id: ID!
+    name: String!
+    description: String
+    items: [Item]
+}
+
+type Query {
+    items: [Item]
+    item(id: Int!): Item
+    groups: [Group]
+    group(id: Int!): Group
+    types: [Type]
+    type(id: Int!): Type
+}
+
+type Mutation {
+    createItem(input: ItemInput): Item
+    updateItem(id: Int!, input: ItemUpdate): Item
+    deleteItem(id: Int!): Boolean
+    createGroup(input: GroupInput): Group
+    updateGroup(id: Int!, input: GroupUpdate): Group
+    deleteGroup(id: Int!): Boolean
+    createType(input: TypeInput): Type
+    updateType(id: Int!, input: TypeUpdate): Type
+    deleteType(id: Int!): Boolean
+}
+
+input ItemInput {
+    name: String!
+    price: Float!
+    url: String!
+    description: String
+    types: [TypeInput]
+}
+
+input GroupInput {
+    name: String!
+    description: String
+    items: [ItemInput]
+}
+
+input TypeInput {
+    name: String!
+}
+
+
+input ItemUpdate {
+    name: String
+    price: Float
+    url: String
+    description: String
+    types: [TypeInput]
+}
+
+input GroupUpdate {
+    name: String
+    description: String
+    items: [ItemInput]
+}
+
+input TypeUpdate {
+    name: String
+}

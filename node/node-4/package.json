@@ -1,0 +1,17 @@
+{
+  "name": "node-graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "npx nodemon -e js,graphql,json -i ./node_modules -i package.json -i package-lock.json server.js",
+    "start": "node server.js"
+  },
+  "author": "Gataullin <diatomiccoder> Ildar",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.6.0"
+  }
+}
