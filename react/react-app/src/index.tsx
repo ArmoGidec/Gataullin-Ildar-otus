@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import App from './App';
+import App from './newApp';
 
-render(<App name="Ильдар" />, document.querySelector('#root'));
+render(<App/>, document.querySelector('#root'));
