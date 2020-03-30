@@ -12,7 +12,7 @@ const cities = [
     }, {
         id: 1,
         ru: "Москва",
-        en: "Moskva"
+        en: "Moscow"
     }, {
         id: 2,
         ru: "Казань",
