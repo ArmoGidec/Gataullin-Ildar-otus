@@ -1,0 +1,40 @@
+.forecast-table {
+    display: grid;
+    grid-template:  '- header'
+                    'aside body';
+}
+
+.forecast-table-header {
+    grid-area: header;
+}
+
+.forecast-table-aside {
+    grid-area: aside;
+}
+
+.forecast-table-body {
+    grid-area: body;
+    --span: 1;
+}
+
+.forecast-table-header, .forecast-table-aside, .forecast-table-body {
+    display: grid;
+    grid-auto-rows: 30px;
+    text-align: center;
+    align-items: center;
+}
+
+.forecast-table-header, .forecast-table-body {
+    grid-template-columns: repeat(8, 1fr);
+}
+
+.forecast-table-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.forecast-table-data:first-child {
+    grid-column-start: var(--span);
+}
