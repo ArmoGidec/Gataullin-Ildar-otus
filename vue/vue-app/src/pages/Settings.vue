@@ -60,24 +60,30 @@
 </template>
 
 <script>
+import { ref, computed } from '@vue/composition-api';
+
 export default {
     name: 'SettingsPage',
-    data: () => ({
-        day: 24,
-        lastResult: '10/25',
-        all: '80/100',
-        time: 7,
-        level: 5,
-        types: ['sum', 'div', 'pow'],
-    }),
-    computed: {
-        last() {
-            const [solved, of] = this.lastResult.split('/');
+    setup() {
+        const day = ref(24);
+        const lastResult = ref('10/25');
+        const all = ref('80/100');
+        const time = ref(7);
+        const level = ref(5);
+        const types = ref(['sum', 'div', 'pow']);
+
+        const last = computed(() => {
+            const [solved, of] = lastResult.value.split('/');
             return { solved, of };
-        },
-        accurancy() {
-            const [solved, of] = this.all.split('/');
+        });
+
+        const accurancy = computed(() => {
+            const [solved, of] = all.value.split('/');
             return Math.floor(solved / of * 100);
+        });
+
+        return {
+            day, time, level, types, last, accurancy
         }
     }
 };
