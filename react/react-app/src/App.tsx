@@ -1,10 +1,10 @@
 import React, { Component, FormEvent } from 'react';
 
 import '$src/assets/style/main.css';
-import { weatherApiKey, apiBaseUrl } from '$src/config';
 import SearchForm from './components/SearchForm';
 import SearchResult from './components/SearchResult';
 import Favorites from './components/Favorites';
+import api from './utils/api';
 
 interface IProps { }
 
@@ -42,16 +42,7 @@ class WeatherApp extends Component<IProps, IState>{
 
     getWeather = async () => {
         this.setState({ ...this.state, fetching: true });
-        let searchResult = null
-        const searchResponseResult = await fetch(
-            `${apiBaseUrl}?appid=${weatherApiKey}&units=metric&q=${this.state.searchValue}`);
-        if (searchResponseResult.status === 200) {
-            const responseObj = await searchResponseResult.json()
-            searchResult = {
-                name: responseObj.name,
-                ...responseObj.main
-            };
-        }
+        let searchResult = await api.getWeather(this.state.searchValue);
         this.setState({ ...this.state, fetching: false, searchResult });
     }
 

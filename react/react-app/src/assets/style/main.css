@@ -37,7 +37,7 @@ html {
     border: 1px solid #ced4da;
 }
 
-.input-group button {
+.input-group button, .input-group .btn {
     background-color: #e9ecef;
     border: 1px solid #ced4da;
     cursor: pointer;
