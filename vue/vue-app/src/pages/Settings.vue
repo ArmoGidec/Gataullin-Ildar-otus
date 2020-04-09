@@ -60,32 +60,40 @@
 </template>
 
 <script>
-import { ref, computed } from '@vue/composition-api';
+import { mapGetters, mapMutations } from 'vuex';
+import { MUTATIONS } from '../store/modules/settings/types';
 
 export default {
     name: 'SettingsPage',
-    setup() {
-        const day = ref(24);
-        const lastResult = ref('10/25');
-        const all = ref('80/100');
-        const time = ref(7);
-        const level = ref(5);
-        const types = ref(['sum', 'div', 'pow']);
-
-        const last = computed(() => {
-            const [solved, of] = lastResult.value.split('/');
-            return { solved, of };
-        });
-
-        const accurancy = computed(() => {
-            const [solved, of] = all.value.split('/');
-            return Math.floor(solved / of * 100);
-        });
-
-        return {
-            day, time, level, types, last, accurancy
+    methods: {
+        ...mapMutations([
+            MUTATIONS.SET_TIME,
+            MUTATIONS.SET_LEVEL,
+            MUTATIONS.SET_TYPES
+        ]),
+    },
+    computed: {
+        ...mapGetters({
+            day: 'day',
+            accurancy: 'accurancy',
+            last: 'last',
+            stateTime: 'time',
+            stateLevel: 'level',
+            stateTypes: 'types'
+        }),
+        time: {
+            get() { return this.stateTime; },
+            set(val) { this[MUTATIONS.SET_TIME](val); }
+        },
+        level: {
+            get() { return this.stateLevel; },
+            set(val) { this[MUTATIONS.SET_LEVEL](val); }
+        },
+        types: {
+            get() { return this.stateTypes; },
+            set(val) { this[MUTATIONS.SET_TYPES](val); }
         }
-    }
+    },
 };
 </script>
 
