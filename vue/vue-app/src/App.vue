@@ -5,7 +5,7 @@
                 <div class="col-12 col-md-8 col-lg-6 col-xl-4 offset-md-2 offset-lg-3 offset-xl-4">
                     <div class="card">
                         <div class="card-body">
-                            <SettingsPage />
+                            <router-view></router-view>
                         </div>
                     </div>
                 </div>
@@ -17,8 +17,5 @@
 <script>
 export default {
     name: 'App',
-    components: {
-        SettingsPage: () => import('./pages/Settings'),
-    }
 };
 </script>
