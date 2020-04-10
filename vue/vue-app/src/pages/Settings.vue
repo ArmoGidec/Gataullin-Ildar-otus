@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <fragment>
         <div class="row">
             <div class="col-12">
                 <h1>Привет</h1>
@@ -53,10 +53,12 @@
         </div>
         <div class="row">
             <div class="col-12 text-right">
-                <button class="btn btn-light shadow px-3">Play</button>
+                <router-link class="btn btn-light shadow px-3" :to="{name: 'game'}">
+                    Play
+                </router-link>
             </div>
         </div>
-    </div>
+    </fragment>
 </template>
 
 <script>

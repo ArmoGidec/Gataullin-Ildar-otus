@@ -9,7 +9,13 @@ const router = new VueRouter({
         {
             path: '/',
             component: () => import('../pages/Settings.vue'),
-        }
+            name: 'settings'
+        },
+        {
+            path: '/game',
+            component: () => import('../pages/Game.vue'),
+            name: 'game'
+        },
     ]
 });
 
