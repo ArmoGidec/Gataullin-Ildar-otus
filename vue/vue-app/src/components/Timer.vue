@@ -1,8 +1,29 @@
 <template>
-    <div class="timer">
-        <span>4:37</span>
-    </div>
+    <div class="timer">{{ formatedTime }}</div>
 </template>
+
+<script>
+import useTimer from '$src/composition/useTimer';
+import { onBeforeUnmount } from '@vue/composition-api';
+
+/**
+ * @type {import('vue').Component}
+ */
+const Timer = {
+    name: 'Timer',
+    props: ['time', 'isTick'],
+    setup: ({ time, isTick }, { emit }) => {
+        const { formatedTime, clearTimer } = useTimer(time, isTick, emit);
+
+        isTick.clearTimer = clearTimer;
+        onBeforeUnmount(clearTimer);
+
+        return { formatedTime };
+    }
+};
+
+export default Timer;
+</script>
 
 <style lang="scss" scoped>
 .timer {
@@ -17,6 +38,6 @@
 
     font-size: 1.2rem;
     width: 7rem;
-    margin-left: auto;
+    cursor: default;
 }
 </style>

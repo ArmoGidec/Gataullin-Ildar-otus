@@ -8,8 +8,10 @@
         <div class="row py-3">
             <div class="col-12">
                 <p>Добро пожаловать на {{ day }} тренировачный день.</p>
-                <p>Ваш последний результат - решено {{ last.solved }} из {{ last.of }}</p>
-                <p>Общая точность {{ accurancy }}%</p>
+                <p
+                    v-if="last !== null"
+                >Ваш последний результат - решено {{ last!==null && last.correctly }} из {{ last!==null && last.solved }}</p>
+                <p v-if="accurancy !==null">Общая точность {{ accurancy }}%</p>
             </div>
         </div>
         <div class="row">
@@ -29,74 +31,59 @@
                 </label>
             </div>
             <div class="form-group col-12">
-                <label>
-                    <input type="checkbox" value="sum" v-model="types" />
-                    Суммирование
-                </label>
-                <label>
-                    <input type="checkbox" value="dif" v-model="types" />
-                    Разность
-                </label>
-                <label>
-                    <input type="checkbox" value="mul" v-model="types" />
-                    Умножение
-                </label>
-                <label>
-                    <input type="checkbox" value="div" v-model="types" />
-                    Деление
-                </label>
-                <label>
-                    <input type="checkbox" value="pow" v-model="types" />
-                    Возведение в степень
+                <label v-for="(obj, type) in OPERATION" :key="type">
+                    <input type="checkbox" :value="obj" v-model="types" />
+                    {{ obj.text }}
                 </label>
             </div>
         </div>
         <div class="row">
             <div class="col-12 text-right">
-                <router-link class="btn btn-light shadow px-3" :to="{name: 'game'}">
-                    Play
-                </router-link>
+                <router-link class="btn btn-light shadow px-3" :to="{name: 'game'}">Играть</router-link>
             </div>
         </div>
     </fragment>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
-import { MUTATIONS } from '../store/modules/settings/types';
+import { computed, ref } from '@vue/composition-api';
 
-export default {
+import useStore from '$src/composition/useStore';
+import { MUTATIONS } from '$src/store/modules/settings/types';
+import { OPERATION } from '$src/utils/types';
+
+/**
+ * @type {import('vue').Component}
+ */
+const Settings = {
     name: 'SettingsPage',
-    methods: {
-        ...mapMutations([
-            MUTATIONS.SET_TIME,
-            MUTATIONS.SET_LEVEL,
-            MUTATIONS.SET_TYPES
-        ]),
-    },
-    computed: {
-        ...mapGetters({
-            day: 'day',
-            accurancy: 'accurancy',
-            last: 'last',
-            stateTime: 'time',
-            stateLevel: 'level',
-            stateTypes: 'types'
-        }),
-        time: {
-            get() { return this.stateTime; },
-            set(val) { this[MUTATIONS.SET_TIME](val); }
-        },
-        level: {
-            get() { return this.stateLevel; },
-            set(val) { this[MUTATIONS.SET_LEVEL](val); }
-        },
-        types: {
-            get() { return this.stateTypes; },
-            set(val) { this[MUTATIONS.SET_TYPES](val); }
-        }
-    },
+    setup() {
+        const { getters, commit } = useStore();
+
+        const day = getters.day;
+        const accurancy = ref(getters.accurancy);
+        const last = ref(getters.last);
+
+        const time = computed({
+            get: () => getters.time,
+            set: val => commit(MUTATIONS.SET_TIME, val)
+        });
+
+        const level = computed({
+            get: () => getters.level,
+            set: val => commit(MUTATIONS.SET_LEVEL, val)
+        });
+
+        const types = computed({
+            get: () => getters.types,
+            set: val => commit(MUTATIONS.SET_TYPES, val)
+        });
+
+        return { day, accurancy, last, time, level, types, OPERATION };
+    }
 };
+
+export default Settings;
 </script>
 
 <style lang="scss" scoped>

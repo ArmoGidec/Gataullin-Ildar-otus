@@ -1,66 +1,95 @@
 <template>
     <div class="keypad">
         <div class="keypad__numbers">
-            <div class="keypad__item">1</div>
-            <div class="keypad__item">2</div>
-            <div class="keypad__item">3</div>
-            <div class="keypad__item">4</div>
-            <div class="keypad__item">5</div>
-            <div class="keypad__item">6</div>
-            <div class="keypad__item">7</div>
-            <div class="keypad__item">8</div>
-            <div class="keypad__item">9</div>
-            <div class="keypad__item">0</div>
-        </div>
-        <div class="keypad__helpers">
-            <div class="keypad__item">&lt;</div>
-            <div class="keypad__item">&gt;</div>
-            <div class="keypad__item">?</div>
-            <div class="keypad__item">=</div>
+            <button
+                class="btn rounded-circle keypad__item keypad__item--left"
+                title="Левое поле"
+                @click="$emit('navigate', 'left')"
+            >&lt;</button>
+            <button
+                class="btn rounded-circle keypad__item keypad__item--right"
+                title="Правое поле"
+                @click="$emit('navigate', 'right')"
+            >&gt;</button>
+            <button
+                class="btn rounded-circle keypad__item"
+                v-for="number of numbersArr"
+                :key="number"
+                @click="$emit('keyClick', number)"
+            >{{ number}}</button>
         </div>
     </div>
 </template>
 
 <script>
-export default {
+const numbersArr = Array.from(Array(10)).map((_, i) => (i + 1) % 10);
+
+/**
+ * @type {import('vue').Component}
+ */
+const Keypad = {
     name: 'Keypad',
+    setup() {
+        return { numbersArr };
+    }
 };
+
+export default Keypad;
 </script>
 
 <style lang="scss" scoped>
 .keypad {
     display: flex;
-
-    &__numbers, &__helpers {
-        flex: 1;
-        display: grid;
-        gap: 1.5rem;
-    }
+    justify-content: center;
 
     &__numbers {
-        flex-basis: 40%;
+        display: grid;
+        gap: 1.5rem 2.5rem;
         grid-template-columns: repeat(3, 1fr);
     }
 
     &__item {
-        border-radius: 50%;
         width: 2.8rem;
         height: 2.8rem;
-        line-height: 2.7rem;
-        text-align: center;
         margin: 0 auto;
-        
+
         font-weight: bold;
         font-size: 1.2rem;
 
-        box-shadow: 0 .6rem 1rem rgba(0,0,0,.4);
-    }
-
-    &__numbers &__item {
+        box-shadow: 0 0.6rem 1rem rgba(0, 0, 0, 0.4);
         background-color: rgb(206, 126, 61);
 
+        &:hover {
+            background-color: rgb(138, 96, 61);
+        }
+
+        &:active {
+            background-color: rgb(104, 81, 63);
+        }
+
+        &--left,
+        &--right {
+            background-color: rgb(90, 119, 128);
+
+            &:hover {
+                background-color: rgb(110, 148, 160);
+            }
+
+            &:active {
+                background-color: rgb(61, 81, 87);
+            }
+        }
+
+        &--left {
+            order: 1;
+        }
+
         &:last-child {
-            grid-column-start: 2;
+            order: 2;
+        }
+
+        &--right {
+            order: 3;
         }
     }
 }
