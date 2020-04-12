@@ -8,12 +8,12 @@ const router = new VueRouter({
     routes: [
         {
             path: '/',
-            component: () => import('../pages/Settings.vue'),
+            component: () => import('$src/pages/Settings.vue'),
             name: 'settings'
         },
         {
             path: '/game',
-            component: () => import('../pages/Game.vue'),
+            component: () => import('$src/pages/Game.vue'),
             name: 'game'
         },
     ]
