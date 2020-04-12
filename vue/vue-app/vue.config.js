@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     outputDir: path.resolve('..', '..', 'mind-calc'),
-    publicPath: '/mind-calc',
+    publicPath: '/Gataullin-Ildar-otus/mind-calc/',
     configureWebpack: {
         resolve: {
             alias: {
