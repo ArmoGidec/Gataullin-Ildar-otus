@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5 mx-auto">
                     <div class="card shadow">
-                        <div class="card-body">
+                        <div class="card-body pb-4">
                             <router-view></router-view>
                         </div>
                     </div>
@@ -15,7 +15,22 @@
 </template>
 
 <script>
-export default {
+import { provideStore } from './composition/useStore';
+/**
+ * @type {import('vue').Component}
+ */
+const App = {
     name: 'App',
+    setup(_, { root }) {
+        provideStore(root.$store);
+    }
 };
+
+export default App;
 </script>
+
+<style lang="scss" scoped>
+.card-body {
+    position: relative;
+}
+</style>
