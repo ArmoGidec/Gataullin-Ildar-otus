@@ -1,9 +1,10 @@
 import { MUTATIONS } from './types';
+import { OPERATION } from '$src/utils/types';
 
 const state = {
     time: 7,
     level: 5,
-    types: ['sum', 'div', 'pow']
+    types: [OPERATION.ADD, OPERATION.SUB],
 };
 
 const mutations = {
