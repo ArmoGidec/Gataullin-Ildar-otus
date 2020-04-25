@@ -1,0 +1,13 @@
+.input-wrapper {
+    display: flex;
+
+    label {
+        flex: 1;
+    }
+
+    select {
+        padding: .4rem 1rem;
+        flex: 3;
+    }
+}
+

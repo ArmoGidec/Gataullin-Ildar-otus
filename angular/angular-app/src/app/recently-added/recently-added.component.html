@@ -1,0 +1,10 @@
+<div class="words">
+    <ul class="words__list">
+        <li class="words__list-item" *ngFor="let translation of translations">
+            {{ translation.en }} - {{ translation.ru }}
+        </li>
+    </ul>
+    <button class="btn words__btn">
+        Add New
+    </button>
+</div>
