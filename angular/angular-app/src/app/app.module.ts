@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { RecentlyAddedComponent } from './recently-added/recently-added.component';
@@ -13,7 +14,7 @@ import { SettingsComponent } from './settings/settings.component';
         GoComponent,
         SettingsComponent,
     ],
-    imports: [BrowserModule],
+    imports: [BrowserModule, HttpClientModule],
     providers: [],
     bootstrap: [AppComponent],
 })
