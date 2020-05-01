@@ -1,0 +1,14 @@
+<div class="app">
+    <div class="tabs">
+        <div class="tabs__controls-panel">
+            <div *ngFor="let page of pages" class="tabs__control-wrapper" [ngClass]="{active: active === page.url}">
+                <div class="tabs__control" (click)="activate(page.url)">{{ page.title }}</div>
+            </div>
+        </div>
+        <div class="tabs__content">
+            <app-recently-added *ngIf="active === 'recently'"></app-recently-added>
+            <app-go *ngIf="active === 'go'"></app-go>
+            <app-settings *ngIf="active === 'settings'"></app-settings>
+        </div>
+    </div>
+</div>
