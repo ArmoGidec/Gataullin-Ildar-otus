@@ -48,7 +48,7 @@ export class RecentlyAddedComponent implements OnInit, OnDestroy {
     disabled = false;
 
     submit() {
-        if (this.addTranslationForm.status === 'INVALID') {
+        if (this.addTranslationForm.invalid) {
             return;
         }
 

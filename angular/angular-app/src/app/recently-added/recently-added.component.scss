@@ -21,12 +21,6 @@
 
     &__input {
         flex: 3;
-        padding: 0.75rem;
         margin-right: 0.9rem;
-        outline: 0;
-
-        &.ng-invalid.ng-touched {
-            border: 2px solid rgb(219, 112, 112);
-        }
     }
 }

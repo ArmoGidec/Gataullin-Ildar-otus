@@ -69,3 +69,12 @@ body {
 .input-wrapper {
     margin-bottom: 1rem;
 }
+
+input, select, textarea {
+    padding: 0.4rem 1rem;
+    outline: 0;
+
+    &.ng-invalid.ng-touched {
+        border: 2px solid rgb(219, 112, 112);
+    }
+}
