@@ -1,10 +1,16 @@
 <div class="words">
-    <ul class="words__list">
+    <ul class="words__list" *ngIf="translations.length > 0; else empty">
         <li class="words__list-item" *ngFor="let translation of translations">
-            {{ translation.en }} - {{ translation.ru }}
+            {{ translation.ru }} - {{ translation.en }}
         </li>
     </ul>
-    <button class="btn words__btn">
-        Add New
-    </button>
+    <ng-template #empty>
+        <div class="words__list" >There is no recently added words yet.</div>
+    </ng-template>
+    <form [formGroup]="addTranslationForm" class="words__form" (ngSubmit)="submit()">
+        <input class="words__input" type="text" name="text" formControlName="text" placeholder="Russian -> English">
+        <button class="btn words__btn" type="submit" [disabled]="disabled">
+            Add New
+        </button>
+    </form>
 </div>

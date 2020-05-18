@@ -59,6 +59,11 @@ body {
     & + & {
         margin-left: 1rem;
     }
+
+    &:disabled {
+        background-color: rgb(54, 57, 73);
+        cursor: not-allowed;
+    }
 }
 
 .input-wrapper {
