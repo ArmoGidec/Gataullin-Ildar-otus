@@ -13,7 +13,7 @@ interface ITranslationsObj {
 @Injectable({
     providedIn: 'root',
 })
-export default class TranslationsStorageService {
+export class TranslationsStorageService {
     private _translations = new BehaviorSubject<ITranslationsObj>(
         JSON.parse(localStorage.getItem('translations') || '{}')
     );

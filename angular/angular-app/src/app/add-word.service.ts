@@ -3,12 +3,12 @@ import { from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 import TranslateService from './translate.service';
-import TranslationsStorageService, { ITranslationObj } from './translationsStorage.service';
+import { TranslationsStorageService, ITranslationObj } from './translationsStorage.service';
 
 @Injectable({
     providedIn: 'root',
 })
-class AddWordService {
+export class AddWordService {
     constructor(
         private translateService: TranslateService,
         private translationsStorageService: TranslationsStorageService
@@ -30,5 +30,3 @@ class AddWordService {
         return $translation;
     };
 }
-
-export default AddWordService;
