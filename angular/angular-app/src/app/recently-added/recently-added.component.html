@@ -9,7 +9,7 @@
     </ng-template>
     <form [formGroup]="addTranslationForm" class="words__form" (ngSubmit)="submit()">
         <input class="words__input" type="text" name="text" formControlName="text" placeholder="Russian -> English">
-        <button class="btn words__btn" type="submit" [disabled]="disabled">
+        <button class="btn words__btn" type="submit" [disabled]="disabled || addTranslationForm.invalid">
             Add New
         </button>
     </form>
