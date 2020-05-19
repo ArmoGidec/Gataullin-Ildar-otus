@@ -16,16 +16,16 @@ export interface ITranslation {
 @Injectable({
     providedIn: 'root',
 })
-export default class TranslateService {
+export class TranslateService {
     constructor(private http: HttpClient) {}
 
-    translate(text: string): Observable<string[]> {
+    translate(text: string, language: string): Observable<string[]> {
         return this.http
             .get<ITranslation>(API_URL, {
                 params: {
                     key: API_KEY,
                     text,
-                    lang: 'ru-en',
+                    lang: `ru-${language}`,
                 },
             })
             .pipe(map(({ text }) => text));

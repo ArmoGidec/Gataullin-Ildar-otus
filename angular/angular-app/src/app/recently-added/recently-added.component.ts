@@ -2,13 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { AddWordService } from '../add-word.service';
 import { finalize, map } from 'rxjs/operators';
-import { TranslationsStorageService } from '../translationsStorage.service';
+import {
+    TranslationsStorageService,
+    ITranslationObj,
+} from '../translationsStorage.service';
 import { Subscription } from 'rxjs';
-
-type Translation = {
-    ru: string;
-    en: string;
-};
+import { SettingsStorageService } from '../settings-storage.service';
 
 @Component({
     selector: 'app-recently-added',
@@ -16,22 +15,28 @@ type Translation = {
     styleUrls: ['./recently-added.component.scss'],
 })
 export class RecentlyAddedComponent implements OnInit, OnDestroy {
-    translations: Translation[] = [];
+    translations: ITranslationObj[] = [];
     private translationsStorage$: Subscription;
 
     constructor(
         private translationsStorage: TranslationsStorageService,
-        private addWordService: AddWordService
+        private addWordService: AddWordService,
+        private settingsStorage: SettingsStorageService
     ) {}
+
+    language = this.settingsStorage.languages.find(
+        (_language) =>
+            _language.value === this.settingsStorage.settings.language
+    );
 
     ngOnInit() {
         this.translationsStorage$ = this.translationsStorage.translations$
             .pipe(
-                map((translationsObj) =>
-                    Object.entries(translationsObj).map(([ru, en]) => ({
-                        ru,
-                        en,
-                    }))
+                map((translations) =>
+                    translations.filter(
+                        (translationObj) =>
+                            translationObj[this.language.value] !== undefined
+                    )
                 )
             )
             .subscribe((translations) => (this.translations = translations));
