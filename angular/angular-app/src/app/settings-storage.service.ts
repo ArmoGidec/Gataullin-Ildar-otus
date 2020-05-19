@@ -1,22 +1,20 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-export type Language = 'en' | 'es' ;
+export type Language = 'en' | 'es';
 
 export interface ISettings {
-    language: Language,
-    wordsCount: number,
+    language: Language;
+    wordsCount: number;
 }
 
 @Injectable({
     providedIn: 'root',
 })
 export class SettingsStorageService {
-    private _settings = new BehaviorSubject<ISettings>(
-        JSON.parse(
-            localStorage.getItem('settings') ||
-                '{ "language": "en", "wordsCount": 20 }'
-        )
+    private _settings = JSON.parse(
+        localStorage.getItem('settings') ||
+            '{ "language": "en", "wordsCount": 20 }'
     );
 
     readonly languages = [
@@ -30,14 +28,12 @@ export class SettingsStorageService {
         },
     ];
 
-    readonly settings$ = this._settings.asObservable();
-
     get settings() {
-        return this._settings.getValue();
+        return this._settings;
     }
 
     set settings(val) {
-        this._settings.next(val);
+        this._settings = val;
     }
 
     save(settings: ISettings) {
