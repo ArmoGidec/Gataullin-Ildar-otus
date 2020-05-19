@@ -12,7 +12,7 @@ export interface ISettings {
     providedIn: 'root',
 })
 export class SettingsStorageService {
-    private _settings = JSON.parse(
+    private _settings: ISettings = JSON.parse(
         localStorage.getItem('settings') ||
             '{ "language": "en", "wordsCount": 20 }'
     );
