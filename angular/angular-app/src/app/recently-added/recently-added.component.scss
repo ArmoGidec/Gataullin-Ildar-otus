@@ -1,5 +1,4 @@
 .words {
-
     &__list {
         list-style: none;
         border: 1.2px solid rgb(78, 74, 74);
@@ -14,5 +13,14 @@
                 margin-bottom: 0;
             }
         }
+    }
+
+    &__form {
+        display: flex;
+    }
+
+    &__input {
+        flex: 3;
+        margin-right: 0.9rem;
     }
 }

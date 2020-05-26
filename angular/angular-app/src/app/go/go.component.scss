@@ -1,4 +1,25 @@
 input {
     width: 100%;
-    padding: 1.2rem 1.8rem;
+}
+
+.playground {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    text-align: center;
+}
+
+.row {
+    display: flex;
+
+    h5 {
+        margin-left: auto;
+        &.correct {
+            color: rgb(23, 139, 23);
+        }
+
+        &.wrong {
+            color: rgb(185, 31, 31);
+        }
+    }
+
 }
